@@ -4,9 +4,8 @@ const User = require('../models/user');
 const { Error } = require('mongoose');
 const ConflictErr = require('../errors/conflict');
 const BadRequestErr = require('../errors/bad-request');
-const { NODE_ENV, JWT_SECRET } = require('../app');
-// Перенести NODE_ENV и JWT в .env файл на сервере
-// и получить к ним доступ с помощью модуля dotenv и process.env
+const NotFoundErr = require('../errors/not-found');
+const { NODE_ENV, JWT_SECRET } = require('../appConfig');
 
 function postUser(req, res, next) {
   const { email, password, name } = req.body;
@@ -57,7 +56,24 @@ function loginUser(req, res, next) {
     .catch(next);
 }
 
-function getUserInfo(req, res, next) {}
+function getUserInfo(req, res, next) {
+  const userId = req.user._id;
+  User.findById(userId)
+    .then((userData) => {
+      if (userData) {
+        res.send({ data: userData });
+      } else {
+        next(new NotFoundErr('Пользователь по указанному _id не найден'));
+      }
+    })
+    .catch((err) => {
+      if (err instanceof Error.CastError) {
+        next(new BadRequestErr('Передан некорректный _id пользователя'));
+      } else {
+        next(err);
+      }
+    });
+}
 
 function patchUserInfo(req, res, next) {}
 
