@@ -75,7 +75,30 @@ function getUserInfo(req, res, next) {
     });
 }
 
-function patchUserInfo(req, res, next) {}
+function patchUserInfo(req, res, next) {
+  const { name } = req.body;
+  const userId = req.user._id;
+
+  User.findByIdAndUpdate(userId, { name }, { new: true, runValidators: true })
+    .then((userData) => {
+      if (userData) {
+        res.send({ data: userData });
+      } else {
+        next(new NotFoundErr('Пользователь с указанным _id не найден'));
+      }
+    })
+    .catch((err) => {
+      if (err instanceof Error.ValidationError) {
+        next(
+          new BadRequestErr(
+            'Переданы некорректные данные при обновлении профиля',
+          ),
+        );
+      } else {
+        next(err);
+      }
+    });
+}
 
 module.exports = {
   postUser,
