@@ -1,12 +1,18 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const { DB_URL, PORT } = require('./appConfig');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const mainRouter = require('./router');
 
 const app = express();
 app.use(express.json());
+app.use(requestLogger);
 
 app.use('/', mainRouter);
+
+app.use(errorLogger);
+
+// Запуск сервера
 
 async function startApp() {
   try {
