@@ -5,7 +5,7 @@ const { requestLogger, errorLogger } = require('./middlewares/logger');
 const centralErrorHandle = require('./middlewares/centralErrorHandle');
 const cors = require('cors');
 const { errors } = require('celebrate');
-const mainRouter = require('./router');
+const mainRouter = require('./routers/index');
 
 const app = express();
 app.use(express.json());
@@ -18,7 +18,7 @@ app.use('/', mainRouter);
 // Обработка ошибок
 app.use(errorLogger);
 app.use(errors());
-app.use(centralErrorHandle());
+app.use(centralErrorHandle);
 
 // Запуск сервера
 async function startApp() {
