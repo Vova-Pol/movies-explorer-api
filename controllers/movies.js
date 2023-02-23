@@ -3,6 +3,13 @@ const { Error } = require('mongoose');
 const NotFoundErr = require('../errors/not-found');
 const BadRequestErr = require('../errors/bad-request');
 const ForbiddenErr = require('../errors/forbidden');
+const {
+  noMovieFoundErrText,
+  invalidDataSavingMovieErrText,
+  noMovieFoundByIdErrText,
+  cantDeleteMovieErrText,
+  wrongMovieIdErrText,
+} = require('../utils/constants');
 
 function getSavedMovies(req, res, next) {
   Movie.find()
@@ -11,7 +18,7 @@ function getSavedMovies(req, res, next) {
       if (data) {
         res.send({ data });
       } else {
-        next(new NotFoundErr('Не найдено ни одного фильма'));
+        next(new NotFoundErr(noMovieFoundErrText));
       }
     })
     .catch(next);
@@ -52,9 +59,7 @@ async function postSavedMovie(req, res, next) {
     res.send({ data: savedMovie });
   } catch (err) {
     if (err instanceof Error.ValidationError) {
-      next(
-        new BadRequestErr('Переданы некорректные данные при сохранении фильма'),
-      );
+      next(new BadRequestErr(invalidDataSavingMovieErrText));
     } else {
       next(err);
     }
@@ -70,16 +75,16 @@ async function deleteSavedMovie(req, res, next) {
     movieData = await Movie.findById(movieId);
 
     if (!movieData) {
-      next(new NotFoundErr('Фильм с указанным _id не найден'));
+      next(new NotFoundErr(noMovieFoundByIdErrText));
     } else if (String(movieData.owner) !== userId) {
-      next(new ForbiddenErr('Вы не можете удалять чужие фильмы'));
+      next(new ForbiddenErr(cantDeleteMovieErrText));
     } else {
       const deletedMovie = await movieData.remove();
       res.send({ data: deletedMovie });
     }
   } catch (err) {
     if (err instanceof Error.CastError) {
-      next(new BadRequestErr('Передан некорректный _id фильма'));
+      next(new BadRequestErr(wrongMovieIdErrText));
     } else {
       next(err);
     }

@@ -6,6 +6,13 @@ const ConflictErr = require('../errors/conflict');
 const BadRequestErr = require('../errors/bad-request');
 const NotFoundErr = require('../errors/not-found');
 const { NODE_ENV, JWT_SECRET } = require('../appConfig');
+const {
+  invalidDataCreatingUserErrText,
+  existingUserErrText,
+  noUserFoundByIdErrText,
+  invalidUserIdErrText,
+  invalidDataPatchingUserErrText,
+} = require('../utils/constants');
 
 function postUser(req, res, next) {
   const { email, password, name } = req.body;
@@ -26,13 +33,9 @@ function postUser(req, res, next) {
     })
     .catch((err) => {
       if (err instanceof Error.ValidationError) {
-        next(
-          new BadRequestErr(
-            'Переданы некорректные данные при создании пользователя',
-          ),
-        );
+        next(new BadRequestErr(invalidDataCreatingUserErrText));
       } else if (err.code === 11000) {
-        next(new ConflictErr('Пользователь с таким email уже существует'));
+        next(new ConflictErr(existingUserErrText));
       } else {
         next(err);
       }
@@ -63,12 +66,12 @@ function getUserInfo(req, res, next) {
       if (userData) {
         res.send({ data: userData });
       } else {
-        next(new NotFoundErr('Пользователь по указанному _id не найден'));
+        next(new NotFoundErr(noUserFoundByIdErrText));
       }
     })
     .catch((err) => {
       if (err instanceof Error.CastError) {
-        next(new BadRequestErr('Передан некорректный _id пользователя'));
+        next(new BadRequestErr(invalidUserIdErrText));
       } else {
         next(err);
       }
@@ -84,16 +87,12 @@ function patchUserInfo(req, res, next) {
       if (userData) {
         res.send({ data: userData });
       } else {
-        next(new NotFoundErr('Пользователь с указанным _id не найден'));
+        next(new NotFoundErr(noUserFoundByIdErrText));
       }
     })
     .catch((err) => {
       if (err instanceof Error.ValidationError) {
-        next(
-          new BadRequestErr(
-            'Переданы некорректные данные при обновлении профиля',
-          ),
-        );
+        next(new BadRequestErr(invalidDataPatchingUserErrText));
       } else {
         next(err);
       }
