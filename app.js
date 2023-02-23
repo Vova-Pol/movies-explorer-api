@@ -1,5 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const helmet = require('helmet');
+const rateLimiter = require('./utils/rateLimiter');
 const { DB_URL, PORT } = require('./appConfig');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const centralErrorHandle = require('./middlewares/centralErrorHandle');
@@ -9,6 +11,10 @@ const mainRouter = require('./routes/index');
 
 const app = express();
 app.use(express.json());
+
+// Безопасность
+app.use(helmet());
+app.use(rateLimiter);
 
 // Обработка запросов
 app.use(requestLogger);
