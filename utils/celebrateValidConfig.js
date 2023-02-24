@@ -1,8 +1,6 @@
 // конфиг валидации модулем celebrate
 const { Joi } = require('celebrate');
 
-const urlRegex = /^https?:\/\/[^а-яё\s]+$/;
-
 const signInConfig = {
   body: Joi.object().keys({
     email: Joi.string().required().email(),

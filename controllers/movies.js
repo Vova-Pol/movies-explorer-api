@@ -1,5 +1,5 @@
-const Movie = require('../models/movie');
 const { Error } = require('mongoose');
+const Movie = require('../models/movie');
 const NotFoundErr = require('../errors/not-found');
 const BadRequestErr = require('../errors/bad-request');
 const ForbiddenErr = require('../errors/forbidden');

@@ -1,12 +1,12 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const helmet = require('helmet');
-const rateLimiter = require('./utils/rateLimiter');
-const { DB_URL, PORT } = require('./appConfig');
-const { requestLogger, errorLogger } = require('./middlewares/logger');
-const centralErrorHandle = require('./middlewares/centralErrorHandle');
 const cors = require('cors');
 const { errors } = require('celebrate');
+const { DB_URL, PORT } = require('./appConfig');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
+const rateLimiter = require('./utils/rateLimiter');
+const centralErrorHandle = require('./middlewares/centralErrorHandle');
 const mainRouter = require('./routes/index');
 
 const app = express();
