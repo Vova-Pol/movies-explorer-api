@@ -102,6 +102,8 @@ function patchUserInfo(req, res, next) {
     .catch((err) => {
       if (err instanceof Error.ValidationError) {
         next(new BadRequestErr(invalidDataPatchingUserErrText));
+      } else if (err.code === 11000) {
+        next(new ConflictErr(existingUserErrText));
       } else {
         next(err);
       }
