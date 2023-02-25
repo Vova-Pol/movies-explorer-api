@@ -1,18 +1,19 @@
 // конфиг валидации модулем celebrate
 const { Joi } = require('celebrate');
+const { urlRegEx } = require('./constants');
 
 const signInConfig = {
   body: Joi.object().keys({
     email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
+    password: Joi.string().required(),
   }),
 };
 
 const signUpConfig = {
   body: Joi.object().keys({
     email: Joi.string().required().email(),
-    password: Joi.string().required().min(8),
-    name: Joi.string().min(2).max(30),
+    password: Joi.string().required(),
+    name: Joi.string().required().min(2).max(30),
   }),
 };
 
@@ -30,12 +31,12 @@ const postSavedMovieConfig = {
     duration: Joi.number().required(),
     year: Joi.string().required(),
     description: Joi.string().required(),
-    image: Joi.string().required(),
-    trailerLink: Joi.string().required(),
-    thumbnail: Joi.string().required(),
-    movieId: Joi.string().required(),
-    nameRu: Joi.string().required(),
-    nameEn: Joi.string().required(),
+    image: Joi.string().required().pattern(urlRegEx),
+    trailerLink: Joi.string().required().pattern(urlRegEx),
+    thumbnail: Joi.string().required().pattern(urlRegEx),
+    movieId: Joi.number().required(),
+    nameRU: Joi.string().required(),
+    nameEN: Joi.string().required(),
   }),
 };
 

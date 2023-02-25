@@ -39,14 +39,14 @@ const movieSchema = new Schema({
     required: true,
   },
   movieId: {
+    type: Number,
+    required: true,
+  },
+  nameRU: {
     type: String,
     required: true,
   },
-  nameRu: {
-    type: String,
-    required: true,
-  },
-  nameEn: {
+  nameEN: {
     type: String,
     required: true,
   },
