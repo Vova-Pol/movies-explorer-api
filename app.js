@@ -7,7 +7,7 @@ const { DB_URL, PORT } = require('./appConfig');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const rateLimiter = require('./utils/rateLimiter');
 const centralErrorHandle = require('./middlewares/centralErrorHandle');
-const mainRouter = require('./routes/index');
+const mainRouter = require('./routes');
 
 const app = express();
 app.use(express.json());
