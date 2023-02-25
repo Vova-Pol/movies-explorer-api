@@ -12,12 +12,13 @@ const mainRouter = require('./routes/index');
 const app = express();
 app.use(express.json());
 
+app.use(requestLogger);
+
 // Безопасность
 app.use(helmet());
 app.use(rateLimiter);
 
 // Обработка запросов
-app.use(requestLogger);
 app.use(cors());
 app.use('/', mainRouter);
 
