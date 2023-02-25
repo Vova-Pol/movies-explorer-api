@@ -19,11 +19,13 @@ function postUser(req, res, next) {
 
   bcrypt
     .hash(password, 10)
-    .then((hash) => User.create({
-      name,
-      email,
-      password: hash,
-    }))
+    .then((hash) =>
+      User.create({
+        name,
+        email,
+        password: hash,
+      }),
+    )
     .then((data) => {
       const newUser = data.toObject();
       delete newUser.password;
@@ -77,10 +79,19 @@ function getUserInfo(req, res, next) {
 }
 
 function patchUserInfo(req, res, next) {
-  const { name } = req.body;
+  const { name, email } = req.body;
   const userId = req.user._id;
 
-  User.findByIdAndUpdate(userId, { name }, { new: true, runValidators: true })
+  const newData =
+    name && email
+      ? { name, email }
+      : name
+      ? { name }
+      : email
+      ? { email }
+      : null;
+
+  User.findByIdAndUpdate(userId, newData, { new: true, runValidators: true })
     .then((userData) => {
       if (userData) {
         res.send({ data: userData });
