@@ -1,3 +1,7 @@
+// Текст ошибок авторизации
+const unauthorizedErrText = 'Необходима авторизация';
+const wrongPasswordOrEmailErrText = 'Неправильные почта или пароль';
+
 // Текст ошибок при запросе к Фильмам
 const noMovieFoundErrText = 'Не найдено ни одного фильма';
 const invalidDataSavingMovieErrText =
@@ -29,5 +33,7 @@ module.exports = {
   noUserFoundByIdErrText,
   invalidUserIdErrText,
   invalidDataPatchingUserErrText,
+  unauthorizedErrText,
+  wrongPasswordOrEmailErrText,
   urlRegEx,
 };
