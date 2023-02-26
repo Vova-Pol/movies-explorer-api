@@ -79,19 +79,9 @@ function getUserInfo(req, res, next) {
 }
 
 function patchUserInfo(req, res, next) {
-  const { name, email } = req.body;
   const userId = req.user._id;
 
-  const newData =
-    name && email
-      ? { name, email }
-      : name
-      ? { name }
-      : email
-      ? { email }
-      : null;
-
-  User.findByIdAndUpdate(userId, newData, { new: true, runValidators: true })
+  User.findByIdAndUpdate(userId, req.body, { new: true, runValidators: true })
     .then((userData) => {
       if (userData) {
         res.send({ data: userData });
