@@ -19,13 +19,11 @@ function postUser(req, res, next) {
 
   bcrypt
     .hash(password, 10)
-    .then((hash) =>
-      User.create({
-        name,
-        email,
-        password: hash,
-      }),
-    )
+    .then((hash) => User.create({
+      name,
+      email,
+      password: hash,
+    }))
     .then((data) => {
       const newUser = data.toObject();
       delete newUser.password;
@@ -65,7 +63,7 @@ function loginUser(req, res, next) {
     .catch(next);
 }
 
-function logoutUser(req, res, next) {
+function logoutUser(req, res) {
   res.clearCookie('jwt').end();
 }
 
