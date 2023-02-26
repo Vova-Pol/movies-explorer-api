@@ -12,7 +12,9 @@ const {
 } = require('../utils/constants');
 
 function getSavedMovies(req, res, next) {
-  Movie.find()
+  const userId = req.user._id;
+
+  Movie.find({ owner: userId })
     .populate('owner')
     .then((data) => {
       if (data) {
