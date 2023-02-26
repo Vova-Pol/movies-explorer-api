@@ -65,6 +65,10 @@ function loginUser(req, res, next) {
     .catch(next);
 }
 
+function logoutUser(req, res, next) {
+  res.clearCookie('jwt').end();
+}
+
 function getUserInfo(req, res, next) {
   const userId = req.user._id;
   User.findById(userId)
@@ -109,6 +113,7 @@ function patchUserInfo(req, res, next) {
 module.exports = {
   postUser,
   loginUser,
+  logoutUser,
   getUserInfo,
   patchUserInfo,
 };

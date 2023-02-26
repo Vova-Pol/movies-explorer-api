@@ -1,7 +1,7 @@
 const mainRouter = require('express').Router();
 const { celebrate } = require('celebrate');
 const auth = require('../middlewares/auth');
-const { postUser, loginUser } = require('../controllers/users');
+const { postUser, loginUser, logoutUser } = require('../controllers/users');
 const { signUpConfig, signInConfig } = require('../utils/celebrateValidConfig');
 const NotFoundErr = require('../errors/not-found');
 const { pageNotFoundErrText } = require('../utils/constants');
@@ -10,6 +10,7 @@ const moviesRouter = require('./movies');
 
 mainRouter.post('/signup', celebrate(signUpConfig), postUser);
 mainRouter.post('/signin', celebrate(signInConfig), loginUser);
+mainRouter.post('/signout', logoutUser);
 
 mainRouter.use(auth);
 
