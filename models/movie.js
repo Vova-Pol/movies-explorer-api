@@ -1,4 +1,5 @@
 const { Schema, model } = require('mongoose');
+const { urlRegEx } = require('../utils/constants');
 
 const movieSchema = new Schema({
   country: {
@@ -24,14 +25,23 @@ const movieSchema = new Schema({
   image: {
     type: String,
     required: true,
+    validate: {
+      validator: (v) => urlRegEx.test(v),
+    },
   },
   trailerLink: {
     type: String,
     required: true,
+    validate: {
+      validator: (v) => urlRegEx.test(v),
+    },
   },
   thumbnail: {
     type: String,
     required: true,
+    validate: {
+      validator: (v) => urlRegEx.test(v),
+    },
   },
   owner: {
     type: Schema.Types.ObjectId,

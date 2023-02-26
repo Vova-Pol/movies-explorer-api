@@ -11,7 +11,7 @@ const {
 } = require('../utils/celebrateValidConfig');
 
 moviesRouter.get('/', getSavedMovies);
-moviesRouter.post('/', celebrate(postSavedMovieConfig), postSavedMovie);
+moviesRouter.post('/', postSavedMovie);
 moviesRouter.delete(
   '/:movieId',
   celebrate(deleteSavedMovieConfig),
@@ -19,3 +19,4 @@ moviesRouter.delete(
 );
 
 module.exports = moviesRouter;
+// celebrate(postSavedMovieConfig),
