@@ -19,13 +19,11 @@ function postUser(req, res, next) {
 
   bcrypt
     .hash(password, 10)
-    .then((hash) =>
-      User.create({
-        name,
-        email,
-        password: hash,
-      }),
-    )
+    .then((hash) => User.create({
+      name,
+      email,
+      password: hash,
+    }))
     .then((data) => {
       const newUser = data.toObject();
       delete newUser.password;
