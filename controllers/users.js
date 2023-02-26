@@ -19,11 +19,13 @@ function postUser(req, res, next) {
 
   bcrypt
     .hash(password, 10)
-    .then((hash) => User.create({
-      name,
-      email,
-      password: hash,
-    }))
+    .then((hash) =>
+      User.create({
+        name,
+        email,
+        password: hash,
+      }),
+    )
     .then((data) => {
       const newUser = data.toObject();
       delete newUser.password;
@@ -52,7 +54,13 @@ function loginUser(req, res, next) {
           expiresIn: '7d',
         },
       );
-      res.send({ token });
+
+      res
+        .cookie('jwt', token, {
+          maxAge: 3600000 * 24 * 7,
+          httpOnly: true,
+        })
+        .end();
     })
     .catch(next);
 }

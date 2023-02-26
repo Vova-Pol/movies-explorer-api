@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const helmet = require('helmet');
 const cors = require('cors');
 const { errors } = require('celebrate');
+const cookieParser = require('cookie-parser');
 const { DB_URL, PORT } = require('./appConfig');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
 const rateLimiter = require('./utils/rateLimiter');
@@ -12,7 +13,11 @@ const mainRouter = require('./routes');
 const app = express();
 app.use(express.json());
 
+// Логгирование
 app.use(requestLogger);
+
+// Куки
+app.use(cookieParser());
 
 // Безопасность
 app.use(helmet());
