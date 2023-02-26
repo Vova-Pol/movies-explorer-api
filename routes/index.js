@@ -4,6 +4,7 @@ const auth = require('../middlewares/auth');
 const { postUser, loginUser } = require('../controllers/users');
 const { signUpConfig, signInConfig } = require('../utils/celebrateValidConfig');
 const NotFoundErr = require('../errors/not-found');
+const { pageNotFoundErrText } = require('../utils/constants');
 const usersRouter = require('./users');
 const moviesRouter = require('./movies');
 
@@ -16,7 +17,7 @@ mainRouter.use('/users', usersRouter);
 mainRouter.use('/movies', moviesRouter);
 
 mainRouter.use('*', (req, res, next) => {
-  next(new NotFoundErr('Такой страницы не существует'));
+  next(new NotFoundErr(pageNotFoundErrText));
 });
 
 module.exports = mainRouter;

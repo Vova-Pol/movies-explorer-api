@@ -19,6 +19,9 @@ const invalidUserIdErrText = 'Передан некорректный _id пол
 const invalidDataPatchingUserErrText =
   'Переданы некорректные данные при обновлении профиля';
 
+// Текст общих ошибок
+const pageNotFoundErrText = 'Такой страницы не существует';
+
 // Регулярные выражения для валидации
 const urlRegEx = /^https?:\/\/[^а-яё\s]+$/;
 
@@ -35,5 +38,6 @@ module.exports = {
   invalidDataPatchingUserErrText,
   unauthorizedErrText,
   wrongPasswordOrEmailErrText,
+  pageNotFoundErrText,
   urlRegEx,
 };
