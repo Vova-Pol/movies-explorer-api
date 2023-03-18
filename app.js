@@ -11,6 +11,7 @@ const centralErrorHandle = require('./middlewares/centralErrorHandle');
 const mainRouter = require('./routes');
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 // Логгирование
@@ -24,7 +25,7 @@ app.use(helmet());
 app.use(rateLimiter);
 
 // Обработка запросов
-app.use(cors());
+
 app.use('/', mainRouter);
 
 // Обработка ошибок
