@@ -31,7 +31,7 @@ function postUser(req, res, next) {
       delete newUser.password;
 
       const token = jwt.sign(
-        { _id: user._id },
+        { _id: newUser._id },
         NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret-key',
         {
           expiresIn: '7d',
