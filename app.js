@@ -11,7 +11,15 @@ const centralErrorHandle = require('./middlewares/centralErrorHandle');
 const mainRouter = require('./routes');
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: 'http://localhost:3000',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    preflightContinue: false,
+    optionsSuccessStatus: 200,
+    credentials: true,
+  }),
+);
 app.use(express.json());
 
 // Логгирование
