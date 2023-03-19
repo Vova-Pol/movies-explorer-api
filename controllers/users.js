@@ -19,15 +19,31 @@ function postUser(req, res, next) {
 
   bcrypt
     .hash(password, 10)
-    .then((hash) => User.create({
-      name,
-      email,
-      password: hash,
-    }))
+    .then((hash) =>
+      User.create({
+        name,
+        email,
+        password: hash,
+      }),
+    )
     .then((data) => {
       const newUser = data.toObject();
       delete newUser.password;
-      res.send({ data: newUser });
+
+      const token = jwt.sign(
+        { _id: user._id },
+        NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret-key',
+        {
+          expiresIn: '7d',
+        },
+      );
+
+      res
+        .cookie('jwt', token, {
+          maxAge: 3600000 * 24 * 7,
+          httpOnly: true,
+        })
+        .send({ data: newUser });
     })
     .catch((err) => {
       if (err instanceof Error.ValidationError) {
