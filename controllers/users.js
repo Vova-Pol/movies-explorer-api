@@ -42,6 +42,8 @@ function postUser(req, res, next) {
         .cookie('jwt', token, {
           maxAge: 3600000 * 24 * 7,
           httpOnly: true,
+          secure: false,
+          sameSite: 'None',
         })
         .send({ data: newUser });
     })
@@ -73,6 +75,8 @@ function loginUser(req, res, next) {
         .cookie('jwt', token, {
           maxAge: 3600000 * 24 * 7,
           httpOnly: true,
+          secure: false,
+          sameSite: 'None',
         })
         .send({ data: user });
     })
