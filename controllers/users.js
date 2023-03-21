@@ -74,7 +74,7 @@ function loginUser(req, res, next) {
           maxAge: 3600000 * 24 * 7,
           httpOnly: true,
         })
-        .end();
+        .send({ data: user });
     })
     .catch(next);
 }
