@@ -84,7 +84,7 @@ function loginUser(req, res, next) {
 }
 
 function logoutUser(req, res) {
-  res.clearCookie('jwt').end();
+  res.clearCookie('jwt').send({ message: 'Вы вышли из профиля' });
 }
 
 function getUserInfo(req, res, next) {
