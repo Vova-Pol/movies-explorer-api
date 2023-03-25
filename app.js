@@ -13,7 +13,11 @@ const mainRouter = require('./routes');
 const app = express();
 app.use(
   cors({
-    origin: 'http://localhost:3000',
+    origin: [
+      'http://localhost:3000',
+      'http://movie-vova-pol.nomoredomains.work',
+      'https://movie-vova-pol.nomoredomains.work',
+    ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     optionsSuccessStatus: 200,
