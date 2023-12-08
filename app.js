@@ -15,8 +15,7 @@ app.use(
   cors({
     origin: [
       'http://localhost:3000',
-      'http://movie-vova-pol.nomoredomains.work',
-      'https://movie-vova-pol.nomoredomains.work',
+      'https://vova-pol.github.io/movies-explorer-frontend',
     ],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
