@@ -15,13 +15,13 @@ const {
 } = require('../utils/constants');
 
 function postUser(req, res, next) {
-  const { email, password, name } = req.body;
+  const { email, password, username } = req.body;
 
   bcrypt
     .hash(password, 10)
     .then((hash) =>
       User.create({
-        name,
+        username,
         email,
         password: hash,
       }),

@@ -16,7 +16,7 @@ const userSchema = new Schema({
     required: true,
     select: false,
   },
-  name: {
+  username: {
     type: String,
     required: true,
     minlength: 2,
